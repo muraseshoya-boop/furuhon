@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0043)file:///C:/Users/muras/Downloads/index.html -->
+<!-- saved from url=(0045)file:///C:/Users/muras/Downloads/index_1.html -->
 <html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -778,13 +778,19 @@ function renderSummary() {
   document.getElementById('s-sold').textContent   = sold.length  + '冊';
   document.getElementById('s-profit').textContent = '¥' + sold.reduce((a,p) => a + (p.soldProfit ?? p.profit), 0).toLocaleString();
   const today      = new Date().toISOString().slice(0,10);
-  const weekAgo    = new Date(Date.now() - 7*86400000).toISOString().slice(0,10);
+  // 今週：日曜始まり・土曜終わり
+  const now = new Date();
+  const dayOfWeek = now.getDay(); // 0=日, 6=土
+  const sunday = new Date(now); sunday.setDate(now.getDate() - dayOfWeek);
+  const saturday = new Date(sunday); saturday.setDate(sunday.getDate() + 6);
+  const weekStart = sunday.toISOString().slice(0,10);
+  const weekEnd   = saturday.toISOString().slice(0,10);
   const monthStart = today.slice(0,7) + '-01';
-  const labels = { today:'今日の実績', week:'今週の実績', month:'今月の実績', all:'全期間の実績' };
+  const labels = { today:'今日の実績', week:'今週の実績（日〜土）', month:'今月の実績', all:'全期間の実績' };
   document.getElementById('period-label').textContent = labels[currentPeriod];
   let f = sold;
   if (currentPeriod === 'today') f = sold.filter(p => p.soldDate === today);
-  else if (currentPeriod === 'week')  f = sold.filter(p => p.soldDate >= weekAgo);
+  else if (currentPeriod === 'week')  f = sold.filter(p => p.soldDate >= weekStart && p.soldDate <= weekEnd);
   else if (currentPeriod === 'month') f = sold.filter(p => p.soldDate >= monthStart);
   document.getElementById('p-count').textContent    = f.length;
   document.getElementById('p-sales').textContent    = '¥' + f.reduce((a,p) => a + (p.soldPrice ?? p.price), 0).toLocaleString();
