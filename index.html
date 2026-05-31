@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0043)file:///C:/Users/muras/Downloads/index.html -->
+<html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>古本管理アプリ</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./index_files/css2" rel="stylesheet">
 <style>
   :root {
     --bg:#F5F3EE;--surface:#FFF;--surface2:#F0EDE6;--border:#E2DDD6;--border2:#CCC8C0;
@@ -138,17 +138,17 @@
 <div class="header">
   <div class="header-logo">📚 古本管理 <span>メルカリShops</span></div>
   <div class="sync-status" id="sync-status">
-    <div class="sync-dot offline" id="sync-dot"></div>
-    <span id="sync-text">未接続</span>
+    <div class="sync-dot " id="sync-dot"></div>
+    <span id="sync-text">同期済み ✓</span>
   </div>
 </div>
 
 <nav class="nav">
-  <button class="nav-btn active" onclick="switchView('register',this)">商品登録</button>
-  <button class="nav-btn" onclick="switchView('inventory',this)">在庫一覧</button>
-  <button class="nav-btn" onclick="switchView('sold',this)">売却済み</button>
-  <button class="nav-btn" onclick="switchView('summary',this)">売上集計</button>
-  <button class="nav-btn" onclick="switchView('settings',this)">⚙️ 設定</button>
+  <button class="nav-btn active" onclick="switchView(&#39;register&#39;,this)">商品登録</button>
+  <button class="nav-btn" onclick="switchView(&#39;inventory&#39;,this)">在庫一覧</button>
+  <button class="nav-btn" onclick="switchView(&#39;sold&#39;,this)">売却済み</button>
+  <button class="nav-btn" onclick="switchView(&#39;summary&#39;,this)">売上集計</button>
+  <button class="nav-btn" onclick="switchView(&#39;settings&#39;,this)">⚙️ 設定</button>
 </nav>
 
 <main class="main">
@@ -160,7 +160,7 @@
     <div class="setup-banner" id="setup-banner" style="display:none">
       <h3>🔗 Googleスプレッドシートと連携してください</h3>
       <p>まず設定画面でGASのURLを登録すると、複数端末でデータを共有できます。</p>
-      <button class="btn-connect" onclick="switchView('settings', document.querySelector('.nav-btn:last-child'))">⚙️ 設定画面へ →</button>
+      <button class="btn-connect" onclick="switchView(&#39;settings&#39;, document.querySelector(&#39;.nav-btn:last-child&#39;))">⚙️ 設定画面へ →</button>
     </div>
 
     <div class="card">
@@ -201,7 +201,7 @@
           <label>コンディション</label>
           <select id="condition">
             <option>未使用に近い</option>
-            <option selected>目立った傷や汚れなし</option>
+            <option selected="">目立った傷や汚れなし</option>
             <option>やや傷や汚れあり</option>
             <option>傷や汚れあり</option>
           </select>
@@ -266,7 +266,18 @@
         <thead><tr>
           <th>タイトル</th><th>仕入日</th><th>原価</th><th>販売価格</th><th>想定手残り</th><th>利益率</th><th></th>
         </tr></thead>
-        <tbody id="inv-body"></tbody>
+        <tbody id="inv-body"><tr>
+    <td class="td-title" title="現象学入門">現象学入門</td>
+    <td class="td-mono">2026-05-29T15:00:00.000Z</td>
+    <td class="td-mono">¥250</td>
+    <td class="td-mono">¥1,000</td>
+    <td class="td-pos">¥517</td>
+    <td class="td-pos">51.7%</td>
+    <td style="display:flex;gap:6px">
+      <button class="btn-outline" onclick="openSellModal(1780220725464)" style="font-size:11px;padding:5px 10px">売却済みにする</button>
+      <button class="btn-outline" onclick="openDeleteModal(1780220725464)" style="font-size:11px;padding:5px 10px;color:var(--red);border-color:var(--red)">削除</button>
+    </td>
+  </tr></tbody>
       </table>
     </div>
     <div id="inv-empty" class="empty" style="display:none">在庫がありません</div>
@@ -286,21 +297,21 @@
         <tbody id="sold-body"></tbody>
       </table>
     </div>
-    <div id="sold-empty" class="empty" style="display:none">売却済み商品がありません</div>
+    <div id="sold-empty" class="empty" style="display: block;">売却済み商品がありません</div>
   </div>
 
   <!-- ===== 売上集計 ===== -->
   <div id="view-summary" class="view">
     <div class="summary-grid">
-      <div class="summary-card"><div class="summary-card-label">在庫数</div><div class="summary-card-value" id="s-stock">0冊</div></div>
+      <div class="summary-card"><div class="summary-card-label">在庫数</div><div class="summary-card-value" id="s-stock">1冊</div></div>
       <div class="summary-card"><div class="summary-card-label">累計売却</div><div class="summary-card-value" id="s-sold">0冊</div></div>
       <div class="summary-card"><div class="summary-card-label">累計手残り</div><div class="summary-card-value pos" id="s-profit">¥0</div></div>
     </div>
     <div class="period-tabs">
-      <button class="period-tab active" onclick="setPeriod('today',this)">今日</button>
-      <button class="period-tab" onclick="setPeriod('week',this)">今週</button>
-      <button class="period-tab" onclick="setPeriod('month',this)">今月</button>
-      <button class="period-tab" onclick="setPeriod('all',this)">全期間</button>
+      <button class="period-tab active" onclick="setPeriod(&#39;today&#39;,this)">今日</button>
+      <button class="period-tab" onclick="setPeriod(&#39;week&#39;,this)">今週</button>
+      <button class="period-tab" onclick="setPeriod(&#39;month&#39;,this)">今月</button>
+      <button class="period-tab" onclick="setPeriod(&#39;all&#39;,this)">全期間</button>
     </div>
     <div class="card">
       <div class="card-title" id="period-label">今日の実績</div>
@@ -308,7 +319,7 @@
         <div class="metric"><div class="metric-label">売上冊数</div><div class="metric-value" id="p-count">0</div></div>
         <div class="metric"><div class="metric-label">売上合計</div><div class="metric-value" id="p-sales">¥0</div></div>
         <div class="metric"><div class="metric-label">実売上合計</div><div class="metric-value" id="p-net">¥0</div></div>
-        <div class="metric"><div class="metric-label">手残り合計</div><div class="metric-value" id="p-profit">¥0</div></div>
+        <div class="metric"><div class="metric-label">手残り合計</div><div class="metric-value pos" id="p-profit">¥0</div></div>
         <div class="metric"><div class="metric-label">仕入れ原価合計</div><div class="metric-value" id="p-cost">¥0</div></div>
         <div class="metric"><div class="metric-label">送料合計</div><div class="metric-value" id="p-shipping">¥0</div></div>
         <div class="metric"><div class="metric-label">手数料合計</div><div class="metric-value" id="p-fee-sum">¥0</div></div>
@@ -323,7 +334,7 @@
           <tbody id="p-table"></tbody>
         </table>
       </div>
-      <div id="p-empty" class="empty" style="display:none">この期間に売却した商品はありません</div>
+      <div id="p-empty" class="empty" style="display: block;">この期間に売却した商品はありません</div>
     </div>
   </div>
 
@@ -334,7 +345,7 @@
 
       <div class="info-box">
         <strong>設定手順（初回のみ・5〜10分）</strong>
-        1. <a href="https://sheets.google.com" target="_blank" style="color:var(--accent-mid)">Googleスプレッドシート</a> を新規作成する<br>
+        1. <a href="https://sheets.google.com/" target="_blank" style="color:var(--accent-mid)">Googleスプレッドシート</a> を新規作成する<br>
         2. メニュー「拡張機能」→「Apps Script」を開く<br>
         3. ダウンロードした <strong>furuhon-gas.js</strong> の中身を全てコピーして貼り付け<br>
         4. 保存（Ctrl+S）→「デプロイ」→「新しいデプロイ」<br>
@@ -365,8 +376,8 @@
       </p>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button class="btn-outline" onclick="loadData()">🔄 スプレッドシートから再読み込み</button>
-        <button class="btn-outline" onclick="exportCSV('stock')">在庫をCSV出力</button>
-        <button class="btn-outline" onclick="exportCSV('sold')">売却済みをCSV出力</button>
+        <button class="btn-outline" onclick="exportCSV(&#39;stock&#39;)">在庫をCSV出力</button>
+        <button class="btn-outline" onclick="exportCSV(&#39;sold&#39;)">売却済みをCSV出力</button>
       </div>
     </div>
   </div>
@@ -396,7 +407,22 @@
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<!-- 削除モーダル -->
+<div class="modal-bg" id="delete-modal">
+  <div class="modal">
+    <h3>🗑️ 削除する</h3>
+    <div class="sell-field">
+      <div id="delete-title" style="font-weight:500;font-size:14px;color:var(--text);padding:4px 0;line-height:1.5"></div>
+    </div>
+    <p style="font-size:13px;color:var(--red);margin-top:4px">この商品を削除します。元に戻せません。</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeDeleteModal()">キャンセル</button>
+      <button class="btn-danger" onclick="confirmDelete()">削除する</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">データを読み込みました（1件）</div>
 
 <script>
 // ============================================================
@@ -641,7 +667,10 @@ function renderInventory() {
     <td class="td-mono">¥${p.price.toLocaleString()}</td>
     <td class="${p.profit >= 0 ? 'td-pos' : 'td-neg'}">¥${p.profit.toLocaleString()}</td>
     <td class="${p.margin >= 0 ? 'td-pos' : 'td-neg'}">${p.margin}%</td>
-    <td><button class="btn-outline" onclick="openSellModal(${p.id})" style="font-size:11px;padding:5px 10px">売却済みにする</button></td>
+    <td style="display:flex;gap:6px">
+      <button class="btn-outline" onclick="openSellModal(${p.id})" style="font-size:11px;padding:5px 10px">売却済みにする</button>
+      <button class="btn-outline" onclick="openDeleteModal(${p.id})" style="font-size:11px;padding:5px 10px;color:var(--red);border-color:var(--red)">削除</button>
+    </td>
   </tr>`).join('');
 }
 
@@ -659,6 +688,36 @@ function openSellModal(id) {
 function closeSellModal() {
   document.getElementById('sell-modal').classList.remove('show');
   sellTargetId = null;
+}
+
+// ============================================================
+// 削除モーダル
+// ============================================================
+let deleteTargetId = null;
+function openDeleteModal(id) {
+  const p = products.find(x => x.id === id); if (!p) return;
+  deleteTargetId = id;
+  document.getElementById('delete-title').textContent = p.title;
+  document.getElementById('delete-modal').classList.add('show');
+}
+function closeDeleteModal() {
+  document.getElementById('delete-modal').classList.remove('show');
+  deleteTargetId = null;
+}
+async function confirmDelete() {
+  const p = products.find(x => x.id === deleteTargetId); if (!p) return;
+  closeDeleteModal();
+  setSyncStatus('syncing', '削除中...');
+  try {
+    products = products.filter(x => x.id !== deleteTargetId);
+    await gasPost({ action: 'save_all', products });
+    setSyncStatus('', '同期済み ✓');
+    showToast('削除しました');
+  } catch(e) {
+    setSyncStatus('error', 'エラー');
+    showToast('削除失敗：' + e.message, true);
+  }
+  renderInventory();
 }
 async function confirmSell() {
   const p = products.find(x => x.id === sellTargetId); if (!p) return;
@@ -798,5 +857,6 @@ if (GAS_URL) {
   document.getElementById('setup-banner').style.display = 'block';
 }
 </script>
-</body>
-</html>
+
+
+</body></html>
