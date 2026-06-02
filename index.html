@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/muras/Downloads/index_15.html -->
+<!-- saved from url=(0046)file:///C:/Users/muras/Downloads/index_16.html -->
 <html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10697,7 +10697,6 @@ function setSyncStatus(state, text) {
 
 async function gasGet() {
   if (!GAS_URL) return null;
-  // キャッシュ防止のためタイムスタンプを付与
   const url = GAS_URL + (GAS_URL.includes('?') ? '&' : '?') + 't=' + Date.now();
   const res  = await fetch(url, { redirect: 'follow', cache: 'no-store' });
   const data = await res.json();
