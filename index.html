@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/muras/Downloads/index_13.html -->
-<html lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>古本管理アプリ</title>
-<link rel="preconnect" href="https://fonts.googleapis.com/">
-<link href="./index_files/css2" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg:#F5F3EE;--surface:#FFF;--surface2:#F0EDE6;--border:#E2DDD6;--border2:#CCC8C0;
@@ -138,17 +138,17 @@
 <div class="header">
   <div class="header-logo">📚 古本管理 <span>メルカリShops</span></div>
   <div class="sync-status" id="sync-status">
-    <div class="sync-dot error" id="sync-dot"></div>
-    <span id="sync-text">エラー</span>
+    <div class="sync-dot offline" id="sync-dot"></div>
+    <span id="sync-text">未接続</span>
   </div>
 </div>
 
 <nav class="nav">
-  <button class="nav-btn active" onclick="switchView(&#39;register&#39;,this)">商品登録</button>
-  <button class="nav-btn" onclick="switchView(&#39;inventory&#39;,this)">在庫一覧</button>
-  <button class="nav-btn" onclick="switchView(&#39;sold&#39;,this)">売却済み</button>
-  <button class="nav-btn" onclick="switchView(&#39;summary&#39;,this)">売上集計</button>
-  <button class="nav-btn" onclick="switchView(&#39;settings&#39;,this)">⚙️ 設定</button>
+  <button class="nav-btn active" onclick="switchView('register',this)">商品登録</button>
+  <button class="nav-btn" onclick="switchView('inventory',this)">在庫一覧</button>
+  <button class="nav-btn" onclick="switchView('sold',this)">売却済み</button>
+  <button class="nav-btn" onclick="switchView('summary',this)">売上集計</button>
+  <button class="nav-btn" onclick="switchView('settings',this)">⚙️ 設定</button>
 </nav>
 
 <main class="main">
@@ -160,7 +160,7 @@
     <div class="setup-banner" id="setup-banner" style="display:none">
       <h3>🔗 Googleスプレッドシートと連携してください</h3>
       <p>まず設定画面でGASのURLを登録すると、複数端末でデータを共有できます。</p>
-      <button class="btn-connect" onclick="switchView(&#39;settings&#39;, document.querySelector(&#39;.nav-btn:last-child&#39;))">⚙️ 設定画面へ →</button>
+      <button class="btn-connect" onclick="switchView('settings', document.querySelector('.nav-btn:last-child'))">⚙️ 設定画面へ →</button>
     </div>
 
     <div class="card">
@@ -201,7 +201,7 @@
           <label>コンディション</label>
           <select id="condition">
             <option>未使用に近い</option>
-            <option selected="">目立った傷や汚れなし</option>
+            <option selected>目立った傷や汚れなし</option>
             <option>やや傷や汚れあり</option>
             <option>傷や汚れあり</option>
           </select>
@@ -283,12 +283,12 @@
       <div class="summary-card"><div class="summary-card-label">累計手残り</div><div class="summary-card-value pos" id="s-profit">¥0</div></div>
     </div>
     <div class="period-tabs">
-      <button class="period-tab active" onclick="setPeriod(&#39;today&#39;,this)">今日</button>
-      <button class="period-tab" onclick="setPeriod(&#39;week&#39;,this)">今週</button>
-      <button class="period-tab" onclick="setPeriod(&#39;lastweek&#39;,this)">先週</button>
-      <button class="period-tab" onclick="setPeriod(&#39;twoweeksago&#39;,this)">先々週</button>
-      <button class="period-tab" onclick="setPeriod(&#39;month&#39;,this)">今月</button>
-      <button class="period-tab" onclick="setPeriod(&#39;all&#39;,this)">全期間</button>
+      <button class="period-tab active" onclick="setPeriod('today',this)">今日</button>
+      <button class="period-tab" onclick="setPeriod('week',this)">今週</button>
+      <button class="period-tab" onclick="setPeriod('lastweek',this)">先週</button>
+      <button class="period-tab" onclick="setPeriod('twoweeksago',this)">先々週</button>
+      <button class="period-tab" onclick="setPeriod('month',this)">今月</button>
+      <button class="period-tab" onclick="setPeriod('all',this)">全期間</button>
     </div>
     <div class="card">
       <div class="card-title" id="period-label">今日の実績</div>
@@ -322,7 +322,7 @@
 
       <div class="info-box">
         <strong>設定手順（初回のみ・5〜10分）</strong>
-        1. <a href="https://sheets.google.com/" target="_blank" style="color:var(--accent-mid)">Googleスプレッドシート</a> を新規作成する<br>
+        1. <a href="https://sheets.google.com" target="_blank" style="color:var(--accent-mid)">Googleスプレッドシート</a> を新規作成する<br>
         2. メニュー「拡張機能」→「Apps Script」を開く<br>
         3. ダウンロードした <strong>furuhon-gas.js</strong> の中身を全てコピーして貼り付け<br>
         4. 保存（Ctrl+S）→「デプロイ」→「新しいデプロイ」<br>
@@ -353,8 +353,8 @@
       </p>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button class="btn-outline" onclick="loadData()">🔄 スプレッドシートから再読み込み</button>
-        <button class="btn-outline" onclick="exportCSV(&#39;stock&#39;)">在庫をCSV出力</button>
-        <button class="btn-outline" onclick="exportCSV(&#39;sold&#39;)">売却済みをCSV出力</button>
+        <button class="btn-outline" onclick="exportCSV('stock')">在庫をCSV出力</button>
+        <button class="btn-outline" onclick="exportCSV('sold')">売却済みをCSV出力</button>
       </div>
     </div>
 
@@ -455,7 +455,7 @@
   </div>
 </div>
 
-<div class="toast error" id="toast">読み込み失敗：Failed to fetch</div>
+<div class="toast" id="toast"></div>
 
 <script>
 // ============================================================
@@ -1067,6 +1067,5 @@ if (GAS_URL) {
   document.getElementById('setup-banner').style.display = 'block';
 }
 </script>
-
-
-</body></html>
+</body>
+</html>
